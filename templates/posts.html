@@ -20,9 +20,13 @@
               {% end %}
             </p>
         </header>
-        <div style="display:none" class="md">{{ blog['content'] }}</div>
+        <div style="display:none" class="md">{{ blog['content'][0:100] }}</div>
         <div class="post-description out">
         </div>
+
+        {% if len(blog['content']) > 100 %}
+          ... <a href="/post?pid={{ blog['pid'] }}">查看全文</a>
+        {% end %}
     </section>
     {% end %}
 
