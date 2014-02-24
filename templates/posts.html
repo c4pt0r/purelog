@@ -20,8 +20,8 @@
               {% end %}
             </p>
         </header>
-        <div style="display:none" id="md">{{ blog['content'] }}</div>
-        <div class="post-description" id="out">
+        <div style="display:none" class="md">{{ blog['content'] }}</div>
+        <div class="post-description out">
         </div>
     </section>
     {% end %}
@@ -32,9 +32,11 @@
   <script type="text/javascript" src="/static/pagedown/Markdown.Editor.js"></script>
   <script>
     $(document).ready(function(){
-      var converter = new Markdown.Converter();
-      var s = converter.makeHtml($('#md').html());
-      $('#out').html(s);
+      $('.md').each(function(e) {
+        var converter = new Markdown.Converter();
+        var s = converter.makeHtml($(this).html());
+        console.log($(this).next('.out').html(s));
+      })
     });
   </script>
 </div>
