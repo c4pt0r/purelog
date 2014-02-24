@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Posts Administration</h2>
+<a href="/post/new">New Post</a>
+<br/>
+<br/>
+<table class="pure-table">
+    <thead>
+      <tr>
+        <td>#</td>
+        <td>Title</td>
+        <td>Create Time</td>
+        <td>Status</td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for blog in blogs %}
+      <tr>
+        <td>{{ blog['pid'] }}</td>
+        <td>{{ blog['title'] }}</td>
+        <td>{{ datetime.datetime.fromtimestamp(int(blog['create_ts'])) }}</td>
+        <td>{{ 'Public' if blog['public'] == True else 'Draft' }}</td>
+        <td>
+          <a href="/post/edit?pid={{ blog['pid'] }}" class="pure-button pure-button-primary">Edit</a>
+          <a href="/post/remove?pid={{ blog['pid'] }}&redirect=/admin" class="button-error pure-button">Del</a>
+        </td>
+      </tr>
+      {% end %}
+    </tbody>
+</table>
+<br/>
+<h2>Site Info Administration</h2>
+<form class="pure-form pure-form-stacked">
+    <fieldset>
+        <label for="name">Site Name</label>
+        <input id="name" type="text" placeholder="Site name">
+        <br/>
+        <label for="desc">Description</label>
+        <input id="desc" type="text" placeholder="Desc">
+        <br/>
+
+        <label for="desc">Author</label>
+        <input id="author" type="text" placeholder="admin">
+        <br/>
+        <button type="submit" class="pure-button pure-button-primary">Save</button>
+    </fieldset>
+</form>
+{% end %}

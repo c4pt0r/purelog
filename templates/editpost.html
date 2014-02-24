@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'New' if is_new == True else 'Edit' }} Post</h2>
+<a href="/admin"> Admin Page </a>
+<br/>
+<br/>
+<form class="pure-form pure-form-stacked">
+    <fieldset>
+        <label for="title">Title</label>
+        <input id="title" class="pure-u-med-1-3" type="text" placeholder="title" value={{ post['title'] }} >
+        <br/>
+        <label for="tags">Tags</label>
+        <input id="tags" class="pure-u-med-1-3" type="text" placeholder="python, stuff, tech" value={{ ','.join(post['tags']) }}>
+        <br/>
+        <label for="title">Content (Markdown)</label>
+        <textarea id="content" class="pure-u-med-2-3" rows=20>{{ post['content'] }}</textarea>
+        <br/>
+        <button type="button" class="pure-button pure-button-primary post-btn">Save</button>
+        <button type="button" class="pure-button pure-button draft-btn">Save Draft</button>
+    </fieldset>
+</form>
+<script src="/static/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    var navigate_to_post = function(pid) {
+      window.location.href = '/post?pid=' + pid;
+    };
+    var submit_post = function(is_public) {
+      var title = $('#title').val();
+      var tags = $('#tags').val();
+      var content = $('#content').val();
+      {% if is_new == True %}
+      $.post('/post/new', {title:title, tags:tags, content:content, public:is_public}, function(e) {
+        navigate_to_post(e.pid);
+      });
+      {% end %}
+
+      {% if is_new == False %}
+      $.post('/post/edit', {pid: {{ pid }},title:title, tags: tags, content: content, public:is_public }, function(e){
+        navigate_to_post(e.pid);
+      });
+      {% end %}
+    };
+
+    $('.post-btn').click(function() {
+      submit_post(1);
+    });
+    $('.draft-btn').click(function() {
+      submit_post(0);
+    });
+  })
+</script>
+{% end %}

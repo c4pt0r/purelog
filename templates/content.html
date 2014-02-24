@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="posts">
+    <section class="post">
+        <header class="post-header">
+          <h2 class="post-title"><a href="#"> {{ blog['title'] }} </a></h2>
+            <br/>
+            <p class="post-meta">
+              By <a class="post-author" href="#"> {{ blog['author'] }} </a> at {{ datetime.datetime.fromtimestamp(int(blog['create_ts'])) }}
+              {% if len(blog['tags']) > 0 %}
+                {% for tag in blog['tags']%}
+                  {% if len(tag) > 0 %}
+                    <a class="post-category post-category-js" href="#">
+                      {{ tag }}
+                    </a>
+                  {% end %}
+                {% end %}
+              {% end %}
+            </p>
+        </header>
+
+        <div class="post-description">
+            <p>
+              {{ blog['content'] }}
+            </p>
+        </div>
+    </section>
+</div>
+{% end %}
