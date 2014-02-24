@@ -27,7 +27,10 @@ def update_post(pid, author, title, tags, content, public=True):
 def get_posts(**kv):
     query = kv.get('query', {})
     is_del = kv.get('is_del', 0)
+    is_public = kv.get('public', None)
     query['is_del'] = is_del
+    if is_public != None:
+        query['public'] = is_public
     if 'fields' in kv:
         field_map = {}.fromkeys(kv['fields'])
         for i in field_map:
@@ -37,3 +40,4 @@ def get_posts(**kv):
 
 def remove_post(pid):
     db.posts.update({'pid':int(pid)}, {'is_del': 1})
+

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} {{ title }} {% end %}
 {% block content %}
 <div class="posts">
     <section class="post">
@@ -6,7 +7,7 @@
           <h2 class="post-title"><a href="#"> {{ blog['title'] }} </a></h2>
             <br/>
             <p class="post-meta">
-              By <a class="post-author" href="#"> {{ blog['author'] }} </a> at {{ datetime.datetime.fromtimestamp(int(blog['create_ts'])) }}
+              By <a class="post-author" href=""> {{ blog['author'] }} </a> at {{ datetime.datetime.fromtimestamp(int(blog['create_ts'])) }}
               {% if len(blog['tags']) > 0 %}
                 {% for tag in blog['tags']%}
                   {% if len(tag) > 0 %}

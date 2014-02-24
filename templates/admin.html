@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} {{ title }} {% end %}
 {% block content %}
 <h2>Posts Administration</h2>
 <a href="/post/new">New Post</a>
@@ -34,16 +35,31 @@
 <form class="pure-form pure-form-stacked">
     <fieldset>
         <label for="name">Site Name</label>
-        <input id="name" type="text" placeholder="Site name">
+        <input id="name" type="text" placeholder="Site name" value="{{ title }}">
         <br/>
         <label for="desc">Description</label>
-        <input id="desc" type="text" placeholder="Desc">
+        <input id="desc" type="text" placeholder="Desc" value="">
         <br/>
 
         <label for="desc">Author</label>
         <input id="author" type="text" placeholder="admin">
         <br/>
-        <button type="submit" class="pure-button pure-button-primary">Save</button>
+        <button type="button" class="submit-btn pure-button pure-button-primary">Save</button>
     </fieldset>
 </form>
+<script src="/static/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.submit-btn').click(function(e){
+        var site_name = $('#name').val();
+        var desc = $('#desc').val();
+        var uname = $('#author').val();
+
+        $.post('/admin/save', {site_name:site_name, site_desc:desc, admin_name:uname}, function(e) {
+          window.location.href='/admin'
+        })
+    })
+  })
+</script>
+
 {% end %}

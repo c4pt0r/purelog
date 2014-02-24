@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} {{ title }} {% end %}
 {% block content %}
 <h2>{{ 'New' if is_new == True else 'Edit' }} Post</h2>
 <a href="/admin"> Admin Page </a>
@@ -15,8 +16,8 @@
         <label for="title">Content (Markdown)</label>
         <textarea id="content" class="pure-u-med-2-3" rows=20>{{ post['content'] }}</textarea>
         <br/>
-        <button type="button" class="pure-button pure-button-primary post-btn">Save</button>
-        <button type="button" class="pure-button pure-button draft-btn">Save Draft</button>
+        <button type="button" class="pure-button pure-button-primary post-btn">Post</button>
+        <button type="button" class="pure-button pure-button draft-btn">Save To Draft</button>
     </fieldset>
 </form>
 <script src="/static/jquery.min.js"></script>

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
 
-<title>PureLog</title>
+<title>{% block title %}PureLog{% end %}</title>
 
 
 <link rel="stylesheet" href="/static/pure-min.css">
@@ -27,8 +27,9 @@
     <div class="sidebar pure-u-1 pure-u-med-1-5">
         <div class="header">
             <hgroup>
-                <h1 class="brand-title"><a href="/">#dongxu</a></h1>
-                <h2 class="brand-tagline"></h2>
+              <h1 class="brand-title"><a href="/">#{% block title %}PureLog{% end %}</a></h1>
+              <br/>
+              <h2 class="brand-tagline">Keep it Simple, Stupid.</h2>
             </hgroup>
 
             <nav class="nav">
@@ -43,10 +44,11 @@
           <div class="footer">
               <div class="pure-menu pure-menu-horizontal pure-menu-open">
                   <ul>
-                      <li><a href="http://purecss.io/">About</a></li>
-                      <li><a href="http://twitter.com/yuilibrary/">Twitter</a></li>
-                      <li><a href="http://github.com/yui/pure/">GitHub</a></li>
-                      <li><a href="http://github.com/yui/pure/">Powered By PureLog</a></li>
+                      <li><a href="http://reading.huangdx.net">About</a></li>
+                      <li><a href="http://weibo.com/c4pt0r/profile">Weibo</a></li>
+                      <li><a href="http://twitter.com/c4pt0r">Twitter</a></li>
+                      <li><a href="http://github.com/c4pt0r">GitHub</a></li>
+                      <li><a href="http://github.com/c4pt0r/purelog">Powered By PureLog</a></li>
                   </ul>
               </div>
           </div>

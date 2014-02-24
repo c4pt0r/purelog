@@ -4,14 +4,15 @@ import models.post as posts
 import time
 import json
 from views.decorators import check_arguments, need_admin
-from utils import get_global_config
+from utils import get_global_config, set_global_config
 
 @router.route("/")
 class IndexViewHandler(tornado.web.RequestHandler):
     def get(self):
         #p = 0 if not self.get_argument('p', None) else int(self.get_argument('p'))
-        blogs = posts.get_posts()
-        self.render('posts.html', blogs = blogs)
+        blogs = posts.get_posts(query={'public':True})
+        self.render('posts.html', blogs = blogs,
+                title = get_global_config('site_name'))
 
 @router.route('/post')
 class PostContentHandler(tornado.web.RequestHandler):
@@ -21,7 +22,8 @@ class PostContentHandler(tornado.web.RequestHandler):
         p = posts.get_posts(query={'pid':int(pid)})
         if len(p) > 0:
             blog = p[0]
-            self.render('content.html', blog = blog)
+            self.render('content.html', blog = blog,
+                    title = get_global_config('site_name'))
         else:
             self.finish('no such post')
 
@@ -29,7 +31,7 @@ class PostContentHandler(tornado.web.RequestHandler):
 class NewPostHandler(tornado.web.RequestHandler):
     @need_admin
     def get(self):
-        self.render('editpost.html',post=posts.empty_post(), is_new=True)
+        self.render('editpost.html',post=posts.empty_post(), is_new=True, title=get_global_config('site_name'))
 
     @need_admin
     @check_arguments(['title', 'content', 'public'])
@@ -51,7 +53,7 @@ class EditPostHandler(tornado.web.RequestHandler):
         p = posts.get_posts(query={'pid':int(pid)})
         if len(p) > 0:
             post = p[0]
-        self.render('editpost.html',pid=post['pid'] ,post=post, is_new = False)
+        self.render('editpost.html',pid=post['pid'] ,post=post, is_new = False, title=get_global_config('site_name'))
 
     @need_admin
     @check_arguments(['pid', 'title', 'content', 'public'])
@@ -82,7 +84,19 @@ class AdminHandler(tornado.web.RequestHandler):
     @need_admin
     def get(self):
         blogs = posts.get_posts(fields=['title', 'create_ts', 'pid', 'public'])
-        self.render('admin.html', blogs=blogs)
+        self.render('admin.html', blogs=blogs, title=get_global_config('site_name'))
+
+@router.route('/admin/save')
+class AdminSaveHandler(tornado.web.RequestHandler):
+    @need_admin
+    def post(self):
+        author = self.get_argument('admin_name')
+        site_name = self.get_argument('site_name')
+        site_desc = self.get_argument('site_desc')
+        set_global_config('admin_name', author)
+        set_global_config('site_name', site_name)
+        set_global_config('site_desc', site_desc)
+        return self.finish({'ret':0})
 
 @router.route('/login')
 class LoginHandler(tornado.web.RequestHandler):
