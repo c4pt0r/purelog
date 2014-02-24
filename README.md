@@ -1,4 +1,4 @@
-tornado-user
-================
+#PureLog
 
-my tornado start template
+
+Keep it simple, stupid.
