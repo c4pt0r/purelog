@@ -19,13 +19,22 @@
               {% end %}
             </p>
         </header>
-
-        <div class="post-description">
-            <p>
-              {{ blog['content'] }}
-            </p>
+        <div style="display:none" id="md">{{ blog['content'] }}</div>
+        <div class="post-description" id="out">
         </div>
     </section>
     {% end %}
+
+  <script type="text/javascript" src="/static/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/pagedown/Markdown.Converter.js"></script>
+  <script type="text/javascript" src="/static/pagedown/Markdown.Sanitizer.js"></script>
+  <script type="text/javascript" src="/static/pagedown/Markdown.Editor.js"></script>
+  <script>
+    $(document).ready(function(){
+      var converter = new Markdown.Converter();
+      var s = converter.makeHtml($('#md').html());
+      $('#out').html(s);
+    });
+  </script>
 </div>
 {% end %}
