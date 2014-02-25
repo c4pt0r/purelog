@@ -31,7 +31,7 @@ class PostContentHandler(tornado.web.RequestHandler):
 class NewPostHandler(tornado.web.RequestHandler):
     @need_admin
     def get(self):
-        self.render('editpost.html',post=posts.empty_post(), is_new=True, title=get_global_config('site_name'))
+        self.render('editpost.html', post=posts.empty_post(), is_new=True, title=get_global_config('site_name'))
 
     @need_admin
     @check_arguments(['title', 'content', 'public'])

@@ -17,7 +17,7 @@
         <textarea id="content" class="pure-u-med-2-3" rows=20>{{ post['content'] }}</textarea>
         <br/>
         <label for="title">Brief (Markdown)</label>
-        <textarea id="brief" class="pure-u-med-2-3" rows=5>{{ post['brief'] }}</textarea>
+        <textarea id="brief" class="pure-u-med-2-3" rows=5>{{ post.get('brief', '') }}</textarea>
         <br/>
         <button type="button" class="pure-button pure-button-primary post-btn">Post</button>
         <button type="button" class="pure-button pure-button draft-btn">Save To Draft</button>
