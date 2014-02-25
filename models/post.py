@@ -4,21 +4,21 @@ from db_utils import db, to_dict, init_incr_id, gen_incr_id
 import time
 
 def empty_post():
-    return {'title': '', 'tags': [], 'content': '', 'public':True, 'pid':-1, 'create_ts':0}
+    return {'title': '','brief': '', 'tags': [], 'content': '', 'public':True, 'pid':-1, 'create_ts':0}
 
 init_incr_id('post')
 def gen_post_id():
     return gen_incr_id('post')
 
-def new_post(author, title, tags, content, public=True):
-    p = {'author':author, 'title': title, 'tags': tags, 'content': content, 'public': public, 'is_del':0}
+def new_post(author, title, tags, content, brief, public=True):
+    p = {'author':author, 'title': title, 'brief':brief, 'tags': tags, 'content': content, 'public': public, 'is_del':0}
     p['create_ts'] = time.time()
     p['pid'] = gen_post_id()
     db.posts.insert(p)
     return {'ret':0, 'pid':p['pid']}
 
-def update_post(pid, author, title, tags, content, public=True):
-    p = {'author':author, 'title': title, 'tags': tags, 'content': content, 'public': public}
+def update_post(pid, author, title, tags, content,brief,  public=True):
+    p = {'author':author, 'title': title, 'tags': tags,'brief':brief, 'content': content, 'public': public}
     p['create_ts'] = time.time()
     p['pid'] = int(pid)
     db.posts.update({'pid': int(pid)}, {'$set': p})

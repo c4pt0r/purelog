@@ -16,6 +16,9 @@
         <label for="title">Content (Markdown)</label>
         <textarea id="content" class="pure-u-med-2-3" rows=20>{{ post['content'] }}</textarea>
         <br/>
+        <label for="title">Brief (Markdown)</label>
+        <textarea id="brief" class="pure-u-med-2-3" rows=5>{{ post['brief'] }}</textarea>
+        <br/>
         <button type="button" class="pure-button pure-button-primary post-btn">Post</button>
         <button type="button" class="pure-button pure-button draft-btn">Save To Draft</button>
     </fieldset>
@@ -29,15 +32,16 @@
     var submit_post = function(is_public) {
       var title = $('#title').val();
       var tags = $('#tags').val();
+      var brief = $('#brief').val();
       var content = $('#content').val();
       {% if is_new == True %}
-      $.post('/post/new', {title:title, tags:tags, content:content, public:is_public}, function(e) {
+      $.post('/post/new', {brief:brief, title:title, tags:tags, content:content, public:is_public}, function(e) {
         navigate_to_post(e.pid);
       });
       {% end %}
 
       {% if is_new == False %}
-      $.post('/post/edit', {pid: {{ pid }},title:title, tags: tags, content: content, public:is_public }, function(e){
+      $.post('/post/edit', {pid: {{ pid }}, brief:brief, title:title, tags: tags, content: content, public:is_public }, function(e){
         navigate_to_post(e.pid);
       });
       {% end %}

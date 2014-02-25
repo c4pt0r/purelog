@@ -39,9 +39,10 @@ class NewPostHandler(tornado.web.RequestHandler):
         title = self.get_argument('title')
         author = get_global_config('admin_name', 'admin')
         content = self.get_argument('content')
+        brief = self.get_argument('brief', '')
         is_public = True if self.get_argument('public') == '1' else False
         tags = self.get_argument('tags', '').split(',')
-        ret = posts.new_post(author, title, tags, content, is_public)
+        ret = posts.new_post(author, title, tags, content, brief, is_public)
         return self.finish(ret)
 
 @router.route('/post/edit')
@@ -60,11 +61,12 @@ class EditPostHandler(tornado.web.RequestHandler):
     def post(self):
         pid = self.get_argument('pid')
         title = self.get_argument('title')
+        brief = self.get_argument('brief', '')
         author = 'dongxu'
         content = self.get_argument('content')
         is_public = True if self.get_argument('public') == '1' else False
         tags = self.get_argument('tags', '').split(',')
-        ret = posts.update_post(pid, author, title, tags, content, is_public)
+        ret = posts.update_post(pid, author, title, tags, content, brief, is_public)
         return self.finish(ret)
 
 @router.route('/post/remove')
@@ -101,7 +103,7 @@ class AdminSaveHandler(tornado.web.RequestHandler):
 @router.route('/login')
 class LoginHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render('auth.html')
+        self.render('auth.html', title= get_global_config('site_name'))
     def post(self):
         u = self.get_argument('username')
         pwd = self.get_argument('password')
